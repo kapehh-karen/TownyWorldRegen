@@ -1,0 +1,9 @@
+name: TownyWorldRegen
+main: me.kapehh.TownyWorldRegen.TownyWorldRegen
+author: kapehh
+version: 1.0.0
+commands:
+    townyregen:
+      usage: /<command> [args]
+      aliases: tr
+      description: Read manual ^_^
