@@ -3,7 +3,11 @@ main: me.kapehh.TownyWorldRegen.TownyWorldRegen
 author: kapehh
 version: 1.0.0
 commands:
-    townyregen:
+    townyregenrect:
       usage: /<command> [args]
-      aliases: tr
-      description: Read manual ^_^
+      aliases: trrect
+      description: Regen rectangle
+    townyregencircle:
+      usage: /<command> [args]
+      aliases: trcirc
+      description: Regen circle

@@ -11,7 +11,9 @@ public class TownyWorldRegen extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        getCommand("townyregen").setExecutor(new TownyWorldRegenExecutor());
+        TownyWorldRegenExecutor executor = new TownyWorldRegenExecutor();
+        getCommand("townyregenrect").setExecutor(executor);
+        getCommand("townyregencircle").setExecutor(executor);
     }
 
     @Override
