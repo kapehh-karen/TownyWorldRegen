@@ -6,7 +6,11 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Created by Karen on 12.06.2014.
  */
 public class TownyWorldRegen extends JavaPlugin {
-    public static TownyWorldRegen instance = null;
+    private static TownyWorldRegen instance = null;
+
+    public static TownyWorldRegen getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
