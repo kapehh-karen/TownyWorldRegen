@@ -3,4 +3,15 @@ TownyWorldRegen
 
 Плагин регенерации мира с учетом плагина Towny.
 
-<b>Загрузить - <a href="https://github.com/kapehh-karen/TownyWorldRegen/tree/master/out/artifacts/TownyWorldRegen">CLICK</a></b>
+Команды:
+	/twr set worldName x1 y1 z1 x2 y2 z2 patternString
+	/twr regen worldName x1 y1 z1 x2 y2 z2
+
+Примеры:
+	/twr set world 0 10 0 100 255 100 50%0,50%35:4 - заполнит в мире world с координат 0,10,0 до 100,255,100 область на половину воздухом и на вторую половину желтой шерстью
+	/twr regen world 0 10 0 100 255 100 - сгенерирует по новой область
+
+Права:
+	- доступно только из консоли
+
+! Требуется WorldEdit !
