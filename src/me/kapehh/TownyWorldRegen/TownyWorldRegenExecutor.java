@@ -56,16 +56,12 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int z2 = Integer.parseInt(args[7]);
             String patternString = args[8];
 
-            int affected = 0; //TownyWorldRegenCore.setWorldRegion(worldName, x1, y1, z1, x2, y2, z2, patternString);
-            TownyWorldRegen.getInstance().getLogger().info(affected + " block(s) have been changed.");
-
-        } else if (method.equalsIgnoreCase("pos")) {
-
-            Player player = (Player) sender;
-            player.sendMessage(
-                " X: " + TownyWorldRegenCore.locationToChunk((int) player.getLocation().getX()) +
-                " Z: " + TownyWorldRegenCore.locationToChunk((int) player.getLocation().getZ())
-            );
+            try {
+                int affected = TownyWorldRegenCore.setWorldRegion(worldName, x1, y1, z1, x2, y2, z2, patternString);
+                TownyWorldRegen.getInstance().getLogger().info(affected + " block(s) have been changed.");
+            } catch (Exception e) {
+                TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());
+            }
 
         }
 
