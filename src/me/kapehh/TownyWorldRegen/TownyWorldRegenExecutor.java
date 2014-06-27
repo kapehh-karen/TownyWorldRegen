@@ -1,5 +1,6 @@
 package me.kapehh.TownyWorldRegen;
 
+import me.kapehh.TownyWorldRegen.TWRSet.TWRSet;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,7 +58,7 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             String patternString = args[8];
 
             try {
-                int affected = TownyWorldRegenCore.setWorldRegion(worldName, x1, y1, z1, x2, y2, z2, patternString);
+                int affected = TWRSet.setWorldRegion(worldName, x1, y1, z1, x2, y2, z2, patternString);
                 TownyWorldRegen.getInstance().getLogger().info(affected + " block(s) have been changed.");
             } catch (Exception e) {
                 TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());
