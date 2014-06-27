@@ -1,5 +1,7 @@
 package me.kapehh.TownyWorldRegen;
 
+import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.WorldEdit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -10,6 +12,16 @@ public class TownyWorldRegen extends JavaPlugin {
 
     public static TownyWorldRegen getInstance() {
         return instance;
+    }
+
+    // Временное решение
+    public static LocalWorld getLocalWorld(String worldName) {
+        for (LocalWorld localWorld : WorldEdit.getInstance().getServer().getWorlds()) {
+            if (localWorld.getName().equalsIgnoreCase(worldName)) {
+                return localWorld;
+            }
+        }
+        return null;
     }
 
     @Override

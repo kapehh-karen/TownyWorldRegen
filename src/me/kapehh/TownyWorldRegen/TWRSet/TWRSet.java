@@ -1,6 +1,7 @@
 package me.kapehh.TownyWorldRegen.TWRSet;
 
 import com.sk89q.worldedit.blocks.BaseBlock;
+import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -14,7 +15,7 @@ import java.util.Random;
  */
 public class TWRSet {
 
-    public static int setWorldRegion(String worldName, int x1, int y1, int z1, int x2, int y2, int z2, String patternString) throws Exception {
+    public static int setWorldRegion(String worldName, PosVector pos1, PosVector pos2, String patternString) throws Exception {
         List<RandomBaseBlock> listChanceOfBlock = new ArrayList<RandomBaseBlock>();
         BaseBlock blockItem;
         double blockChance;
@@ -65,12 +66,12 @@ public class TWRSet {
         World bukkitWorld;
         Block block;
         double chance;
-        int min_x = Math.min(x1, x2);
-        int min_y = Math.min(y1, y2);
-        int min_z = Math.min(z1, z2);
-        int max_x = Math.max(x1, x2);
-        int max_y = Math.max(y1, y2);
-        int max_z = Math.max(z1, z2);
+        int min_x = Math.min(pos1.getX(), pos2.getX());
+        int min_y = Math.min(pos1.getY(), pos2.getY());
+        int min_z = Math.min(pos1.getZ(), pos2.getZ());
+        int max_x = Math.max(pos1.getX(), pos2.getX());
+        int max_y = Math.max(pos1.getY(), pos2.getY());
+        int max_z = Math.max(pos1.getX(), pos2.getX());
 
         bukkitWorld = Bukkit.getWorld(worldName);
         if (bukkitWorld == null) {

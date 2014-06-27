@@ -1,36 +1,106 @@
 package me.kapehh.TownyWorldRegen.TWRRegen;
 
+import com.palmergames.bukkit.towny.regen.TownyRegenAPI;
+import com.sk89q.worldedit.LocalWorld;
+import com.sk89q.worldedit.Vector;
+import com.sk89q.worldedit.blocks.BaseBlock;
+import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
+import me.kapehh.TownyWorldRegen.TownyWorldRegen;
+import org.bukkit.Chunk;
+
 /**
  * Created by Karen on 27.06.2014.
  */
 public class QueueChunkRegen {
 
-    // Координаты чанка в мировых координатах
-    private int posWorldX1;
-    private int posWorldY1;
-    private int posWorldZ1;
-    private int posWorldX2;
-    private int posWorldY2;
-    private int posWorldZ2;
-
-    // Координаты чанка
-    private int chunkX;
-    private int chunkZ;
-
-    // Координаты области для регена
-    private int posRegenX1;
-    private int posRegenY1;
-    private int posRegenZ1;
-    private int posRegenX2;
-    private int posRegenY2;
-    private int posRegenZ2;
-
     // Координаты в чанке для регена
-    private int chunkRegenX1;
-    private int chunkRegenY1;
-    private int chunkRegenZ1;
-    private int chunkRegenX2;
-    private int chunkRegenY2;
-    private int chunkRegenZ2;
-    
+    private PosVector chunkRegen1;
+    private PosVector chunkRegen2;
+
+    // Ссылка на чанк
+    private Chunk chunk;
+
+    public QueueChunkRegen(Chunk chunk, PosVector pos1, PosVector pos2) throws Exception {
+        int chunkXmin = ChunkHelperClass.locationFromChunk(chunk.getX());
+        int chunkYmin = Math.min(pos1.getY(), pos2.getY());
+        int chunkZmin = ChunkHelperClass.locationFromChunk(chunk.getZ());
+        int chunkXmax = chunkXmin + ChunkHelperClass.CHUNK_MAX_XZ - 1;
+        int chunkYmax = Math.max(pos1.getY(), pos2.getY());
+        int chunkZmax = chunkZmin + ChunkHelperClass.CHUNK_MAX_XZ - 1;
+
+        /*TownyWorldRegen.getInstance().getLogger().info("Pos1: " + pos1 + ", Pos2: " + pos2);
+        TownyWorldRegen.getInstance().getLogger().info("chunkXmin: " + chunkXmin + ", chunkXmax: " + chunkXmax);
+        TownyWorldRegen.getInstance().getLogger().info("chunkZmin: " + chunkZmin + ", chunkZmax: " + chunkZmax);*/
+
+        if ((chunkXmin > pos1.getX() && chunkXmin > pos2.getX()) ||
+            (chunkXmax < pos1.getX() && chunkXmax < pos2.getX()) ||
+            (chunkZmin > pos1.getZ() && chunkXmin > pos2.getZ()) ||
+            (chunkZmax < pos1.getZ() && chunkXmax < pos2.getZ())) {
+            throw new Exception("Invalid pos");
+        }
+
+        this.chunk = chunk;
+        this.chunkRegen1 = new PosVector(
+                ChunkHelperClass.locationInChunk(Math.max(chunkXmin, Math.min(pos1.getX(), pos2.getX()))),
+                chunkYmin,
+                ChunkHelperClass.locationInChunk(Math.max(chunkZmin, Math.min(pos1.getZ(), pos2.getZ())))
+        );
+        this.chunkRegen2 = new PosVector(
+                ChunkHelperClass.locationInChunk(Math.min(chunkXmax, Math.max(pos1.getX(), pos2.getX()))),
+                chunkYmax,
+                ChunkHelperClass.locationInChunk(Math.min(chunkZmax, Math.max(pos1.getZ(), pos2.getZ())))
+        );
+    }
+
+    public void regen() throws Exception {
+        LocalWorld world = TownyWorldRegen.getLocalWorld(chunk.getWorld().getName());
+        if (world == null) {
+            throw new Exception("World not found");
+        }
+
+        int chunkX = ChunkHelperClass.locationFromChunk(chunk.getX());
+        int chunkZ = ChunkHelperClass.locationFromChunk(chunk.getZ());
+        int index;
+        Vector pt = new Vector();
+
+        // Сохраняем предыдущее состояние чанка
+        BaseBlock[] blockBackup = new BaseBlock[ChunkHelperClass.CHUNK_MAX_XZ * ChunkHelperClass.CHUNK_MAX_XZ * ChunkHelperClass.CHUNK_MAX_Y];
+        for (int x = 0; x < ChunkHelperClass.CHUNK_MAX_XZ; x++) {
+            for (int z = 0; z < ChunkHelperClass.CHUNK_MAX_XZ; z++) {
+                for (int y = 0; y < ChunkHelperClass.CHUNK_MAX_Y; y++) {
+                    index = y * 16 * 16 + z * 16 + x;
+                    pt.setX(chunkX + x);
+                    pt.setY(y);
+                    pt.setZ(chunkZ + z);
+                    blockBackup[index] = world.getBlock(pt);
+                }
+            }
+        }
+
+        chunk.getWorld().regenerateChunk(chunk.getX(), chunk.getZ());
+
+        // TODO: Что-то не восстанавливается
+        // Восстанавливаем то что не надо было регенить
+        for (int x = 0; x < ChunkHelperClass.CHUNK_MAX_XZ; x++) {
+            for (int z = 0; z < ChunkHelperClass.CHUNK_MAX_XZ; z++) {
+                for (int y = 0; y < ChunkHelperClass.CHUNK_MAX_Y; y++) {
+                    if (
+                        x >= chunkRegen1.getX() && x <= chunkRegen2.getX() &&
+                        y >= chunkRegen1.getY() && y <= chunkRegen2.getY() &&
+                        z >= chunkRegen1.getZ() && z <= chunkRegen2.getZ()
+                    ) continue;
+                    index = y * 16 * 16 + z * 16 + x;
+                    pt.setX(chunkX + x);
+                    pt.setY(y);
+                    pt.setZ(chunkZ + z);
+                    world.copyToWorld(pt, blockBackup[index]);
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("QueueChunkRegen{%s, %s, %s}", chunk.toString(), chunkRegen1.toString(), chunkRegen2.toString());
+    }
 }

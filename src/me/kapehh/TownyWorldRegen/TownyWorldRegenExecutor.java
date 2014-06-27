@@ -1,6 +1,10 @@
 package me.kapehh.TownyWorldRegen;
 
+import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
+import me.kapehh.TownyWorldRegen.TWRRegen.QueueChunkRegen;
 import me.kapehh.TownyWorldRegen.TWRSet.TWRSet;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,10 +18,10 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         // TODO: Не забыть раскрыть комментарий ниже
-        if (sender instanceof Player) {
+        /*if (sender instanceof Player) {
             sender.sendMessage("ERROR!");
             return true;
-        }
+        }*/
 
         if (args.length == 0) {
             return false;
@@ -39,8 +43,22 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int y2 = Integer.parseInt(args[6]);
             int z2 = Integer.parseInt(args[7]);
 
-            TownyWorldRegenCore.regenWorldRegion(worldName, x1, y1, z1, x2, y2, z2);
-            TownyWorldRegen.getInstance().getLogger().info("Region regenerated.");
+            // TEST
+            Player player = (Player) sender;
+            World world = Bukkit.getWorld(worldName);
+            try {
+                QueueChunkRegen queueChunkRegen = new QueueChunkRegen(
+                        world.getChunkAt(player.getLocation()),
+                        new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2)),
+                        new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2))
+                );
+                TownyWorldRegen.getInstance().getLogger().info(queueChunkRegen.toString());
+                queueChunkRegen.regen();
+
+                TownyWorldRegen.getInstance().getLogger().info("Region regenerated.");
+            } catch (Exception e) {
+                TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());
+            }
 
         } else if (method.equalsIgnoreCase("set")) {
 
@@ -58,7 +76,7 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             String patternString = args[8];
 
             try {
-                int affected = TWRSet.setWorldRegion(worldName, x1, y1, z1, x2, y2, z2, patternString);
+                int affected = TWRSet.setWorldRegion(worldName, new PosVector(x1, y1, z1), new PosVector(x2, y2, z2), patternString);
                 TownyWorldRegen.getInstance().getLogger().info(affected + " block(s) have been changed.");
             } catch (Exception e) {
                 TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());
