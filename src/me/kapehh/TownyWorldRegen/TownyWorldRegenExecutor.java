@@ -43,15 +43,14 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int y2 = Integer.parseInt(args[6]);
             int z2 = Integer.parseInt(args[7]);
 
-            // TEST
+            PosVector pos1 = new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
+            PosVector pos2 = new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+
+            // TODO: TEST
             Player player = (Player) sender;
             World world = Bukkit.getWorld(worldName);
             try {
-                QueueChunkRegen queueChunkRegen = new QueueChunkRegen(
-                        world.getChunkAt(player.getLocation()),
-                        new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2)),
-                        new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2))
-                );
+                QueueChunkRegen queueChunkRegen = new QueueChunkRegen(world.getChunkAt(player.getLocation()), pos1, pos2);
                 TownyWorldRegen.getInstance().getLogger().info(queueChunkRegen.toString());
                 queueChunkRegen.regen();
 

@@ -14,16 +14,6 @@ public class TownyWorldRegen extends JavaPlugin {
         return instance;
     }
 
-    // Временное решение
-    public static LocalWorld getLocalWorld(String worldName) {
-        for (LocalWorld localWorld : WorldEdit.getInstance().getServer().getWorlds()) {
-            if (localWorld.getName().equalsIgnoreCase(worldName)) {
-                return localWorld;
-            }
-        }
-        return null;
-    }
-
     @Override
     public void onEnable() {
         instance = this;
