@@ -1,6 +1,7 @@
 package me.kapehh.TownyWorldRegen;
 
 import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
+import me.kapehh.TownyWorldRegen.TWRRegen.ChunkRegenManager;
 import me.kapehh.TownyWorldRegen.TWRRegen.QueueChunkRegen;
 import me.kapehh.TownyWorldRegen.TWRSet.TWRSet;
 import org.bukkit.Bukkit;
@@ -17,11 +18,10 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        // TODO: Не забыть раскрыть комментарий ниже
-        /*if (sender instanceof Player) {
-            sender.sendMessage("ERROR!");
+        if (sender instanceof Player) {
+            sender.sendMessage("Console only!");
             return true;
-        }*/
+        }
 
         if (args.length == 0) {
             return false;
@@ -43,16 +43,9 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int y2 = Integer.parseInt(args[6]);
             int z2 = Integer.parseInt(args[7]);
 
-            PosVector pos1 = new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
-            PosVector pos2 = new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
-
-            // TODO: TEST
-            Player player = (Player) sender;
-            World world = Bukkit.getWorld(worldName);
             try {
-                QueueChunkRegen queueChunkRegen = new QueueChunkRegen(world.getChunkAt(player.getLocation()), pos1, pos2);
-                TownyWorldRegen.getInstance().getLogger().info(queueChunkRegen.toString());
-                queueChunkRegen.regen();
+                ChunkRegenManager chunkRegenManager = new ChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2);
+                chunkRegenManager.run();
 
                 TownyWorldRegen.getInstance().getLogger().info("Region regenerated.");
             } catch (Exception e) {

@@ -6,4 +6,4 @@ commands:
     townyworldregen:
       usage: /<command> [args]
       aliases: twr
-      description: Example /twr <set / regen> [x1 y1 z1 x2 y2 z2 patternSet / x1 y1 z1 x2 y2 z2]
+      description: Example /twr <set / regen> <world> [x1 y1 z1 x2 y2 z2 patternSet / x1 y1 z1 x2 y2 z2]

@@ -38,14 +38,14 @@ public class QueueChunkRegen {
 
         this.chunk = chunk;
         this.chunkRegen1 = new PosVector(
-                ChunkHelperClass.locationInChunk(Math.max(chunkXmin, Math.min(pos1.getX(), pos2.getX()))),
-                chunkYmin,
-                ChunkHelperClass.locationInChunk(Math.max(chunkZmin, Math.min(pos1.getZ(), pos2.getZ())))
+            ChunkHelperClass.locationInChunk(Math.max(chunkXmin, Math.min(pos1.getX(), pos2.getX()))),
+            chunkYmin,
+            ChunkHelperClass.locationInChunk(Math.max(chunkZmin, Math.min(pos1.getZ(), pos2.getZ())))
         );
         this.chunkRegen2 = new PosVector(
-                ChunkHelperClass.locationInChunk(Math.min(chunkXmax, Math.max(pos1.getX(), pos2.getX()))),
-                chunkYmax,
-                ChunkHelperClass.locationInChunk(Math.min(chunkZmax, Math.max(pos1.getZ(), pos2.getZ())))
+            ChunkHelperClass.locationInChunk(Math.min(chunkXmax, Math.max(pos1.getX(), pos2.getX()))),
+            chunkYmax,
+            ChunkHelperClass.locationInChunk(Math.min(chunkZmax, Math.max(pos1.getZ(), pos2.getZ())))
         );
     }
 
@@ -54,6 +54,10 @@ public class QueueChunkRegen {
         World worldBukkit = chunk.getWorld();
         if (localWorld == null || worldBukkit == null) {
             throw new Exception("World not found");
+        }
+
+        if (!chunk.isLoaded() && !chunk.load()) {
+            throw new Exception("Chunk " + chunk.toString() + " not loaded");
         }
 
         int chunkX = ChunkHelperClass.locationFromChunk(chunk.getX());

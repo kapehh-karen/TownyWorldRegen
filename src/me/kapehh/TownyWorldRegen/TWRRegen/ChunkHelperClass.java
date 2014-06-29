@@ -16,10 +16,13 @@ public class ChunkHelperClass {
         // -1 through -16 are chunk -1,
         // 0 through 15 are chunk 0,
         // 16 through 32 are chunk 1...
-        if (worldCoordinate < 0)
+
+        /*if (worldCoordinate < 0)
             return (worldCoordinate + 1) / CHUNK_MAX_XZ - 1;
         else
-            return worldCoordinate / CHUNK_MAX_XZ;
+            return worldCoordinate / CHUNK_MAX_XZ;*/
+
+        return worldCoordinate >> 4;
     }
 
     // Получаем координаты в чанке, относительно мировых координат
@@ -32,6 +35,7 @@ public class ChunkHelperClass {
 
     // Получаем координаты чанка в мировых координатах
     public static int locationFromChunk(int chunkCoord) {
-        return chunkCoord * CHUNK_MAX_XZ;
+        //return chunkCoord * CHUNK_MAX_XZ;
+        return chunkCoord << 4;
     }
 }
