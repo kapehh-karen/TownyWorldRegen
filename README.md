@@ -1,8 +1,6 @@
 TownyWorldRegen
 ===============
 
-Плагин регенерации мира с учетом плагина Towny.
-
 <b>Команды:</b>
 <ul>
 <li>/twr set worldName x1 y1 z1 x2 y2 z2 patternString</li>
