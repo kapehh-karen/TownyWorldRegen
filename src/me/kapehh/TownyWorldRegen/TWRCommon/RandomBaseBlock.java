@@ -1,4 +1,4 @@
-package me.kapehh.TownyWorldRegen.TWRSet;
+package me.kapehh.TownyWorldRegen.TWRCommon;
 
 import com.sk89q.worldedit.blocks.BaseBlock;
 
@@ -8,7 +8,7 @@ import com.sk89q.worldedit.blocks.BaseBlock;
 public class RandomBaseBlock {
     private double chanceFrom;
     private double chanceTo;
-    private BaseBlock baseBlock;
+    private BaseBlock baseBlock; // TODO: Поменять на блок свой
 
     public RandomBaseBlock(double chanceFrom, double chanceTo, BaseBlock baseBlock) {
         this.chanceFrom = chanceFrom;

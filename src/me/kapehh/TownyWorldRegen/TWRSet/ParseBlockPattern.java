@@ -1,6 +1,7 @@
 package me.kapehh.TownyWorldRegen.TWRSet;
 
 import com.sk89q.worldedit.blocks.BaseBlock;
+import me.kapehh.TownyWorldRegen.TWRCommon.RandomBaseBlock;
 
 import java.util.ArrayList;
 import java.util.List;

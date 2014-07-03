@@ -63,7 +63,7 @@ public class ChunkRegenManager {
         }
     }
 
-    public List<Chunk> selectChunks() {
+    public ChunkRegenManager selectChunks() {
         listOfChunks.clear();
 
         for (int x = posRegen1.getX(); x <= posRegen2.getX(); x++) {
@@ -75,19 +75,26 @@ public class ChunkRegenManager {
             }
         }
 
-        return listOfChunks;
+        return this;
     }
 
-    public void run() throws Exception {
-        this.selectChunks();
-
+    public ChunkRegenManager run() throws Exception {
         for (Chunk chunk : listOfChunks) {
             QueueChunkRegen queueChunkRegen = new QueueChunkRegen(chunk, posRegen1, posRegen2);
             queueChunkRegen.regen();
         }
+        return this;
     }
 
     public List<Chunk> getListOfChunks() {
         return listOfChunks;
+    }
+
+    public PosVector getPosRegen1() {
+        return posRegen1;
+    }
+
+    public PosVector getPosRegen2() {
+        return posRegen2;
     }
 }

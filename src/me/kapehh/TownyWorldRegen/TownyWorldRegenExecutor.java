@@ -1,6 +1,8 @@
 package me.kapehh.TownyWorldRegen;
 
+import me.kapehh.TownyWorldRegen.PluginManager.PluginConfig;
 import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
+import me.kapehh.TownyWorldRegen.TWRCommon.RandomBaseBlock;
 import me.kapehh.TownyWorldRegen.TWRRegen.ChunkRegenManager;
 import me.kapehh.TownyWorldRegen.TWRSet.SetterBlockManager;
 import org.bukkit.command.Command;
@@ -8,10 +10,23 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Karen on 12.06.2014.
  */
 public class TownyWorldRegenExecutor implements CommandExecutor {
+
+    private boolean isTowny = false;
+    private List<RandomBaseBlock> listOfBlockReplace = new ArrayList<RandomBaseBlock>();
+
+    @PluginConfig.EventPluginConfig(PluginConfig.EventPluginConfig.EventType.LOAD)
+    public void onLoad() {
+        // TODO: Загрузка конфига
+        TownyWorldRegen.getInstance().getLogger().info("Config Load");
+    }
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,7 +56,7 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int z2 = Integer.parseInt(args[7]);
 
             try {
-                new ChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2).run();
+                new ChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2).selectChunks().run();
                 TownyWorldRegen.getInstance().getLogger().info("Region regenerated.");
             } catch (Exception e) {
                 TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());

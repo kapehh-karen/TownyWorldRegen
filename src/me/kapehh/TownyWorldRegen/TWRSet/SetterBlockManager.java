@@ -2,11 +2,11 @@ package me.kapehh.TownyWorldRegen.TWRSet;
 
 import com.sk89q.worldedit.blocks.BaseBlock;
 import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
+import me.kapehh.TownyWorldRegen.TWRCommon.RandomBaseBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,10 +31,10 @@ public class SetterBlockManager {
 
     public SetterBlockManager(World world, int x1, int y1, int z1, int x2, int y2, int z2, String patternString) throws Exception {
         this(
-                world,
-                new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2)),
-                new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2)),
-                patternString
+            world,
+            new PosVector(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2)),
+            new PosVector(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2)),
+            patternString
         );
     }
 
