@@ -1,11 +1,7 @@
 package me.kapehh.TownyWorldRegen;
 
-import com.sk89q.worldedit.LocalWorld;
-import com.sk89q.worldedit.WorldEdit;
-import me.kapehh.TownyWorldRegen.PluginManager.PluginConfig;
+import me.kapehh.TownyWorldRegen.PluginManager.Config.PluginConfig;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Created by Karen on 12.06.2014.
@@ -36,6 +32,8 @@ public class TownyWorldRegen extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        pluginConfig.saveData();
+
         instance = null;
         pluginConfig = null;
     }

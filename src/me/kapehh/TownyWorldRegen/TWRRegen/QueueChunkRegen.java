@@ -94,6 +94,18 @@ public class QueueChunkRegen {
         }
     }
 
+    public PosVector getChunkRegen1() {
+        return chunkRegen1;
+    }
+
+    public PosVector getChunkRegen2() {
+        return chunkRegen2;
+    }
+
+    public Chunk getChunk() {
+        return chunk;
+    }
+
     @Override
     public String toString() {
         return String.format("QueueChunkRegen{%s, %s, %s}", chunk.toString(), chunkRegen1.toString(), chunkRegen2.toString());

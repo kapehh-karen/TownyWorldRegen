@@ -1,13 +1,19 @@
 package me.kapehh.TownyWorldRegen;
 
-import me.kapehh.TownyWorldRegen.PluginManager.PluginConfig;
+import com.palmergames.bukkit.towny.object.TownyUniverse;
+import me.kapehh.TownyWorldRegen.PluginManager.Config.EventPluginConfig;
+import me.kapehh.TownyWorldRegen.PluginManager.Config.EventType;
+import me.kapehh.TownyWorldRegen.PluginManager.Config.PluginConfig;
 import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
 import me.kapehh.TownyWorldRegen.TWRCommon.RandomBaseBlock;
+import me.kapehh.TownyWorldRegen.TWRCommon.TownyBlockItem;
 import me.kapehh.TownyWorldRegen.TWRRegen.ChunkRegenManager;
+import me.kapehh.TownyWorldRegen.TWRRegen.TownyChunkRegenManager;
 import me.kapehh.TownyWorldRegen.TWRSet.SetterBlockManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -19,12 +25,26 @@ import java.util.List;
 public class TownyWorldRegenExecutor implements CommandExecutor {
 
     private boolean isTowny = false;
-    private List<RandomBaseBlock> listOfBlockReplace = new ArrayList<RandomBaseBlock>();
+    private List<TownyBlockItem> listOfBlockReplace = new ArrayList<TownyBlockItem>();
 
-    @PluginConfig.EventPluginConfig(PluginConfig.EventPluginConfig.EventType.LOAD)
+    @EventPluginConfig(EventType.LOAD)
     public void onLoad() {
-        // TODO: Загрузка конфига
-        TownyWorldRegen.getInstance().getLogger().info("Config Load");
+        FileConfiguration cfg = TownyWorldRegen.getInstance().getPluginConfig().getConfig();
+        isTowny = cfg.getBoolean("townyworldregen.enabled");
+        if (!isTowny) {
+            return;
+        }
+        listOfBlockReplace.clear();
+        int count = cfg.getInt("townyworldregen.items-count");
+        for (int i = 1; i <= count; i++) {
+            TownyBlockItem townyBlockItem = new TownyBlockItem();
+            townyBlockItem.setId(cfg.getInt("townyworldregen.item-" + i + ".id"));
+            townyBlockItem.setData(cfg.getInt("townyworldregen.item-" + i + ".data"));
+            townyBlockItem.setChance(cfg.getInt("townyworldregen.item-" + i + ".chance"));
+            townyBlockItem.setMin(cfg.getInt("townyworldregen.item-" + i + ".min"));
+            townyBlockItem.setMax(cfg.getInt("townyworldregen.item-" + i + ".max"));
+            listOfBlockReplace.add(townyBlockItem);
+        }
     }
 
 
@@ -56,7 +76,11 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
             int z2 = Integer.parseInt(args[7]);
 
             try {
-                new ChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2).selectChunks().run();
+                if (isTowny) {
+                    new TownyChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2, listOfBlockReplace).selectChunks().run();
+                } else {
+                    new ChunkRegenManager(worldName, x1, y1, z1, x2, y2, z2).selectChunks().run();
+                }
                 TownyWorldRegen.getInstance().getLogger().info("Region regenerated.");
             } catch (Exception e) {
                 TownyWorldRegen.getInstance().getLogger().warning("ERROR: " + e.getMessage());

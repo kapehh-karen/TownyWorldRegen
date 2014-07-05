@@ -90,6 +90,10 @@ public class ChunkRegenManager {
         return listOfChunks;
     }
 
+    public World getWorld() {
+        return world;
+    }
+
     public PosVector getPosRegen1() {
         return posRegen1;
     }

@@ -1,5 +1,5 @@
-TownyWorldRegen:
-    enabled: false
+townyworldregen:
+    enabled: true
     items-count: 2
     item-1:
         id: 4
@@ -10,6 +10,6 @@ TownyWorldRegen:
     item-2:
         id: 13
         data: 0
-        chance 50
+        chance: 50
         min: 5
         max: 25
