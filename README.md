@@ -15,7 +15,7 @@ TownyWorldRegen
 
 <b>Конфиг:</b>
 <pre>townyworldregen:
-    enabled: true # Вкл / Выкл
+    enabled: true # Вкл / Выкл обработку Towny чанков
     items-count: 2
     item-1:
         id: 4 # идентификатор блока
