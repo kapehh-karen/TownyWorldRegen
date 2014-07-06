@@ -1,5 +1,10 @@
 package me.kapehh.TownyWorldRegen.TWRCommon;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+
+import java.util.Random;
+
 /**
  * Created by Karen on 05.07.2014.
  */
@@ -7,19 +12,32 @@ public class TownyBlockItem {
     private int id;
     private int data;
     private int chance;
-    private int min;
-    private int max;
+    private double remove;
+    private boolean isActive;
 
     public TownyBlockItem() {
 
     }
 
-    public TownyBlockItem(int id, int data, int chance, int min, int max) {
+    public TownyBlockItem(int id, int data, int chance, double remove) {
         this.id = id;
         this.data = data;
         this.chance = chance;
-        this.min = min;
-        this.max = max;
+        this.remove = remove;
+    }
+
+    public boolean run(Block block) {
+        if (!isActive) {
+            return false;
+        }
+        if (block.getTypeId() != id) {
+            return false;
+        }
+        if (data >= 0 && (block.getData() != (byte)data)) {
+            return false;
+        }
+        block.setType(Material.AIR);
+        return true;
     }
 
     public int getId() {
@@ -46,19 +64,19 @@ public class TownyBlockItem {
         this.chance = chance;
     }
 
-    public int getMin() {
-        return min;
+    public double getRemove() {
+        return remove;
     }
 
-    public void setMin(int min) {
-        this.min = min;
+    public void setRemove(double remove) {
+        this.remove = remove;
     }
 
-    public int getMax() {
-        return max;
+    public boolean isActive() {
+        return isActive;
     }
 
-    public void setMax(int max) {
-        this.max = max;
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 }

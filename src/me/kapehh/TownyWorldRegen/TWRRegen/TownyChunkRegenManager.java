@@ -42,13 +42,11 @@ public class TownyChunkRegenManager extends ChunkRegenManager {
     public TownyChunkRegenManager run() throws Exception {
         for (Chunk chunk : super.getListOfChunks()) {
             boolean isWilderness = TownyUniverse.isWilderness(chunk.getBlock(0, 0, 0));
-            QueueChunkRegen queueChunkRegen;
             if (isWilderness) {
-                queueChunkRegen = new QueueChunkRegen(chunk, super.getPosRegen1(), super.getPosRegen2());
+                new QueueChunkRegen(chunk, super.getPosRegen1(), super.getPosRegen2()).regen();
             } else {
-                queueChunkRegen = new TownyQueueChunkRegen(chunk, super.getPosRegen1(), super.getPosRegen2(), listOfBlockReplace);
+                new TownyQueueChunkRegen(chunk, super.getPosRegen1(), super.getPosRegen2(), listOfBlockReplace).regen();
             }
-            queueChunkRegen.regen();
         }
         return this;
     }

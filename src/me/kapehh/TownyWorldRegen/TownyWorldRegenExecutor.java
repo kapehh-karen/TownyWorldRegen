@@ -38,11 +38,10 @@ public class TownyWorldRegenExecutor implements CommandExecutor {
         int count = cfg.getInt("townyworldregen.items-count");
         for (int i = 1; i <= count; i++) {
             TownyBlockItem townyBlockItem = new TownyBlockItem();
-            townyBlockItem.setId(cfg.getInt("townyworldregen.item-" + i + ".id"));
-            townyBlockItem.setData(cfg.getInt("townyworldregen.item-" + i + ".data"));
-            townyBlockItem.setChance(cfg.getInt("townyworldregen.item-" + i + ".chance"));
-            townyBlockItem.setMin(cfg.getInt("townyworldregen.item-" + i + ".min"));
-            townyBlockItem.setMax(cfg.getInt("townyworldregen.item-" + i + ".max"));
+            townyBlockItem.setId(cfg.getInt("townyworldregen.item-" + i + ".id", -1));
+            townyBlockItem.setData(cfg.getInt("townyworldregen.item-" + i + ".data", -1));
+            townyBlockItem.setChance(cfg.getInt("townyworldregen.item-" + i + ".chance", 0));
+            townyBlockItem.setRemove(cfg.getDouble("townyworldregen.item-" + i + ".remove", 0));
             listOfBlockReplace.add(townyBlockItem);
         }
     }
