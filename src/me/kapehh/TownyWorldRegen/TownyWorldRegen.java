@@ -1,6 +1,6 @@
 package me.kapehh.TownyWorldRegen;
 
-import me.kapehh.TownyWorldRegen.PluginManager.Config.PluginConfig;
+import me.kapehh.main.pluginmanager.config.PluginConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

@@ -1,15 +1,12 @@
 package me.kapehh.TownyWorldRegen;
 
-import com.palmergames.bukkit.towny.object.TownyUniverse;
-import me.kapehh.TownyWorldRegen.PluginManager.Config.EventPluginConfig;
-import me.kapehh.TownyWorldRegen.PluginManager.Config.EventType;
-import me.kapehh.TownyWorldRegen.PluginManager.Config.PluginConfig;
 import me.kapehh.TownyWorldRegen.TWRCommon.PosVector;
-import me.kapehh.TownyWorldRegen.TWRCommon.RandomBaseBlock;
 import me.kapehh.TownyWorldRegen.TWRCommon.TownyBlockItem;
 import me.kapehh.TownyWorldRegen.TWRRegen.ChunkRegenManager;
 import me.kapehh.TownyWorldRegen.TWRRegen.TownyChunkRegenManager;
 import me.kapehh.TownyWorldRegen.TWRSet.SetterBlockManager;
+import me.kapehh.main.pluginmanager.config.EventPluginConfig;
+import me.kapehh.main.pluginmanager.config.EventType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

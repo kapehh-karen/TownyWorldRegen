@@ -5,6 +5,7 @@
       <element id="module-output" name="TownyWorldRegen" />
       <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
       <element id="file-copy" path="$PROJECT_DIR$/config.yml" />
+      <element id="dir-copy" path="$PROJECT_DIR$/../PluginManager/out/production/PluginManager" />
     </root>
   </artifact>
 </component>
