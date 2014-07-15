@@ -23,6 +23,8 @@ public class TownyWorldRegen extends JavaPlugin {
         instance = this;
         pluginConfig = new PluginConfig(this);
 
+        // TODO: Сделать проверку WorldEdit'а
+
         TownyWorldRegenExecutor townyWorldRegenExecutor = new TownyWorldRegenExecutor();
         getCommand("townyworldregen").setExecutor(townyWorldRegenExecutor);
         pluginConfig.addEventClasses(townyWorldRegenExecutor);
