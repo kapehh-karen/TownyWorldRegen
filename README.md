@@ -30,4 +30,4 @@ TownyWorldRegen
 
 <b>Права:</b> доступно только из консоли
 
-<b>!! Требуется WorldEdit !!</b>
+<b>Требует:</b> WorldEdit, PluginManager
