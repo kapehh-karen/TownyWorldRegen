@@ -1,5 +1,6 @@
 package me.kapehh.TownyWorldRegen;
 
+import me.kapehh.main.pluginmanager.checker.PluginChecker;
 import me.kapehh.main.pluginmanager.config.PluginConfig;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,21 +21,37 @@ public class TownyWorldRegen extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
-        pluginConfig = new PluginConfig(this);
+        if (getServer().getPluginManager().getPlugin("PluginManager") == null) {
+            getLogger().info("PluginManager not found!!!");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
 
-        // TODO: Сделать проверку WorldEdit'а
+        instance = this;
+
+        PluginChecker pluginChecker = new PluginChecker(this);
+        if (!pluginChecker.check("WorldEdit")) {
+            return;
+        }
 
         TownyWorldRegenExecutor townyWorldRegenExecutor = new TownyWorldRegenExecutor();
         getCommand("townyworldregen").setExecutor(townyWorldRegenExecutor);
-        pluginConfig.addEventClasses(townyWorldRegenExecutor);
-        pluginConfig.setup();
-        pluginConfig.loadData();
+
+        pluginConfig = new PluginConfig(this); // Initialize
+        pluginConfig.addEventClasses(townyWorldRegenExecutor)
+                    .setup()
+                    .loadData();
     }
 
     @Override
     public void onDisable() {
-        pluginConfig.saveData();
+        if (instance == null) {
+            return;
+        }
+
+        if (pluginConfig != null) {
+            pluginConfig.saveData();
+        }
 
         instance = null;
         pluginConfig = null;
