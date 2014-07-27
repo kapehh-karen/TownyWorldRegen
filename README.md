@@ -15,7 +15,7 @@ TownyWorldRegen
 
 <b>Конфиг:</b>
 <pre>townyworldregen:
-    enabled: true # Вкл / Выкл обработку Towny чанков
+    enabled: true # Вкл / Выкл обработку Towny чанков, <b>если включено, то требует плагин Towny</b>
     items-count: 2
     item-1:
         id: 4 # идентификатор блока
@@ -30,4 +30,4 @@ TownyWorldRegen
 
 <b>Права:</b> доступно только из консоли
 
-<b>Требует:</b> WorldEdit, PluginManager
+<b>Требует:</b> WorldEdit, PluginManager, [Towny]
