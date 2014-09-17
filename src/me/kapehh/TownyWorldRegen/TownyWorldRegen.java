@@ -49,9 +49,9 @@ public class TownyWorldRegen extends JavaPlugin {
             return;
         }
 
-        if (pluginConfig != null) {
+        /*if (pluginConfig != null) {
             pluginConfig.saveData();
-        }
+        }*/
 
         instance = null;
         pluginConfig = null;
